@@ -2,7 +2,8 @@
 
 unsetopt noautomenu
 setopt complete_in_word
-unsetopt always_to_end
+setopt complete_aliases
+setopt always_to_end
 
 WORDCHARS=''
 
@@ -59,4 +60,3 @@ zstyle ':completion:*:*:*:users' ignored-patterns \
 
 # ... unless we really want to.
 zstyle '*' single-ignored show
-
