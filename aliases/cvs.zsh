@@ -1,0 +1,9 @@
+alias cvs="cvs"
+alias cvsst="cvs -q status | grep '^File'"
+alias cvsun='cvsst | grep -v "Status: Up-to-date"'
+alias cvsmod="cvs -q status | grep odified"
+alias update='cvs -q update -d'
+alias cvsstat='cvs -nfq update -ICVS -Iobj.* -I*.pyc'
+alias cvsstatx='cvs -nfq update -ICVS -Iobj.* -I*.pyc | grep -v "^\\?"'
+alias cvsst_long="cvs status | grep "File:" | grep -v Up-to-date"
+alias cvsmod=" cvs status | grep odified"
