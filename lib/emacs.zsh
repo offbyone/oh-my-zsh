@@ -1,0 +1,1 @@
+[[ $EMACS = t ]] && unsetopt zle
