@@ -6,4 +6,6 @@ custom/*.zsh
 !custom/example.zsh
 *.un~
 
+aliases/*.local.zsh
+
 .DS_Store
