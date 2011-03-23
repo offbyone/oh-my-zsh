@@ -7,5 +7,6 @@ custom/*.zsh
 *.un~
 
 aliases/*.local.zsh
+plugins/*.local
 
 .DS_Store
