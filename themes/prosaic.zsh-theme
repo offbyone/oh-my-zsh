@@ -1,3 +1,5 @@
+export VIRTUAL_ENV_DISABLE_PROMPT=yes
+
 # -*- shell-script -*-
 function collapse_pwd {
     echo $(pwd | sed -e "s,^$HOME,~,")
@@ -80,15 +82,13 @@ patches: <patches|join( → )|pre_applied(%{$fg[green]%})|post_applied(%{$reset_
     fi
 }
 
-# PROMPT='
-# %{$fg[magenta]%}%n%{$reset_color%} at %{$fg[yellow]%}%m%{$reset_color%} in %{$fg_bold[green]%}$(collapse_pwd)%{$reset_color%}$(hg_prompt_info)$(git_prompt_info)
-# $(virtualenv_info)$(prompt_char) '
-
 PROMPT='
 %{$(get_prompt_user_color)%}%n%{$reset_color%} at %{$(get_prompt_host_color)%}%m%{$reset_color%} in %{$fg_bold[green]%}$(collapse_pwd)%{$reset_color%}$(hg_prompt_info)$(git_prompt_info)
 $(virtualenv_info)$(prompt_char) '
 
-RPROMPT='$(battery_charge)'
+if [[ $EMACS != t ]]; then
+    RPROMPT='$(battery_charge)'
+fi
 
 ZSH_THEME_GIT_PROMPT_PREFIX=" on %{$fg[magenta]%}"
 ZSH_THEME_GIT_PROMPT_SUFFIX="%{$reset_color%}"

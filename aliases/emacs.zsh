@@ -1,4 +1,4 @@
-if [ -n $EMACS ]; then
+if [[ $EMACS = t ]]; then
     export EDITOR=emacsclient
     export VISUAL=emacsclient
     export PAGER=cat
