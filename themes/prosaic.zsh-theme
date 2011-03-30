@@ -1,3 +1,4 @@
+#!/usr/bin/env zsh
 export VIRTUAL_ENV_DISABLE_PROMPT=yes
 
 # -*- shell-script -*-
@@ -73,7 +74,7 @@ function get_prompt_user_color() {
 }
 
 function hg_prompt_info {
-    if [[ $(pwd) == $HOME || $(hg root) != $HOME ]]; then
+    if [[ $(pwd) == $HOME || $(hg root 2>/dev/null) != $HOME ]]; then
         hg prompt --angle-brackets "\
 < on %{$fg[magenta]%}<branch>%{$reset_color%}>\
 < at %{$fg[yellow]%}<tags|%{$reset_color%}, %{$fg[yellow]%}>%{$reset_color%}>\
