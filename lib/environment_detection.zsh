@@ -20,7 +20,7 @@ function get_env_name () {
 
     hostname=${1:-`hostname`}
     case $hostname in
-        void.* | null.*)
+        void* | null*)
             loc='home.personal'
             ;;
         chris-rose.ims.advanis.ca | chris-rose.local)
