@@ -69,7 +69,7 @@ function get_prompt_user_color() {
             color=$fg[red]
             ;;
     esac
-    [ "$USER" = "root" ] && color=black_on_red
+    [ "$USER" = "root" ] && color=$fg[black]$bg[red]
     echo $color
 }
 
