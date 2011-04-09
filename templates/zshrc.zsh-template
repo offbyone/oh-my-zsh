@@ -17,6 +17,9 @@ export ZSH_THEME="prose"
 # Uncomment the following line to hide warnings for missing plugins
 # WARN_ON_MISSING_PLUGINS="false"
 
+# Uncomment following line if you want to disable autosetting terminal title.
+# export DISABLE_AUTO_TITLE="true"
+
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Example format: plugins=(rails git textmate ruby lighthouse)
 plugins=(git)
