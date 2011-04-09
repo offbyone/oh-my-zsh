@@ -1,3 +1,4 @@
+#!/usr/bin/env zsh
 # Initializes Oh My Zsh
 
 # add a function path
