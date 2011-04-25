@@ -6,10 +6,37 @@ function collapse_pwd {
     echo $(pwd | sed -e "s,^$HOME,~,")
 }
 
+function vcs_type() {
+    hg_root=$(hg root 2>/dev/null)
+    git_root=$(git rev-parse --show-toplevel 2>/dev/null)
+
+    [[ ${#hg_root} == 0 && ${#git_root} == 0 ]] && echo 'none' && return
+    [[ ${#hg_root} == 0 ]] && echo 'git' && return
+    [[ ${#git_root} == 0 ]] && echo 'hg' && return
+
+    if [[ ${#hg_root} -gt ${#git_root} ]]; then
+        echo 'hg'
+    else
+        echo 'git'
+    fi
+}
+
 function prompt_char {
-    git branch >/dev/null 2>/dev/null && echo '±' && return
-    hg root >/dev/null 2>/dev/null && echo '☿' && return
-    echo '○'
+    git_prompt_char='±'
+    hg_prompt_char='☿'
+    default_prompt_char='○'
+
+    case $(vcs_type) in
+        git)
+            echo $git_prompt_char
+            ;;
+        hg)
+            echo $hg_prompt_char
+            ;;
+        *)
+            echo $default_prompt_char
+            ;;
+    esac
 }
 
 function battery_charge {
@@ -74,7 +101,7 @@ function get_prompt_user_color() {
 }
 
 function hg_prompt_info {
-    if [[ $(pwd) == $HOME || $(hg root 2>/dev/null) != $HOME ]]; then
+    if [[ $(vcs_type) == 'hg' ]]; then
         hg prompt --angle-brackets "\
 < on %{$fg[magenta]%}<branch>%{$reset_color%}>\
 < at %{$fg[yellow]%}<tags|%{$reset_color%}, %{$fg[yellow]%}>%{$reset_color%}>\
@@ -83,8 +110,12 @@ patches: <patches|join( → )|pre_applied(%{$fg[green]%})|post_applied(%{$reset_
     fi
 }
 
+function git_prompt_if_applicable {
+    [[ $(vcs_type) == 'git' ]] && git_prompt_info
+}
+
 PROMPT='
-%{$(get_prompt_user_color)%}%n%{$reset_color%} at %{$(get_prompt_host_color)%}%m%{$reset_color%} in %{$fg_bold[green]%}$(collapse_pwd)%{$reset_color%}$(hg_prompt_info)$(git_prompt_info)
+%{$(get_prompt_user_color)%}%n%{$reset_color%} at %{$(get_prompt_host_color)%}%m%{$reset_color%} in %{$fg_bold[green]%}$(collapse_pwd)%{$reset_color%}$(hg_prompt_info)$(git_prompt_if_applicable)
 $(virtualenv_info)$(prompt_char) '
 
 if [[ $EMACS != t ]]; then
