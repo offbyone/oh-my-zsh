@@ -117,8 +117,8 @@ zstyle ':vcs_info:hg*' formats "[%i%u %b%m]"
 zstyle ':vcs_info:hg*' actionformats "(%{$fg_bold[red]%}%a%{$reset_color%})[%i%u %b%m]"
 
 # hash changes branch misc
-zstyle ':vcs_info:git*' formats "[%{$fg[yellow]%}%12.12i%{$reset_color%} %u %{$fg[magenta]%}%b%{$reset_color%} %m]"
-zstyle ':vcs_info:git*' actionformats "(%a)[%{$fg[yellow]%}%12.12i%{$reset_color%} %u %{$fg[magenta]%}%b%{$reset_color%} %m]"
+zstyle ':vcs_info:git*' formats "[%{$fg[yellow]%}%12.12i%{$reset_color%} %u %{$fg[magenta]%}%b%{$reset_color%}%m]"
+zstyle ':vcs_info:git*' actionformats "(%a)[%{$fg[yellow]%}%12.12i%{$reset_color%} %u %{$fg[magenta]%}%b%{$reset_color%}%m]"
 
 zstyle ':vcs_info:git*+set-message:*' hooks git-st git-stash
 
@@ -148,14 +148,14 @@ function +vi-git-st() {
         # for git prior to 1.7
         # ahead=$(git rev-list origin/${hook_com[branch]}..HEAD | wc -l)
         ahead=$(git rev-list ${hook_com[branch]}@{upstream}..HEAD 2>/dev/null | wc -l | tr -s ' ')
-        (( $ahead )) && gitstatus+=( "${c3}+${ahead}${c2}" )
+        (( $ahead )) && gitstatus+=( " ${c3}+${ahead}${c2}" )
 
         # for git prior to 1.7
         # behind=$(git rev-list HEAD..origin/${hook_com[branch]} | wc -l)
         behind=$(git rev-list HEAD..${hook_com[branch]}@{upstream} 2>/dev/null | wc -l | tr -s ' ')
-        (( $behind )) && gitstatus+=( "${c4}-${behind}${c2}" )
+        (( $behind )) && gitstatus+=( " ${c4}-${behind}${c2}" )
 
-        hook_com[branch]="${hook_com[branch]} [${remote} ${(j:/:)gitstatus}]"
+        hook_com[branch]="${hook_com[branch]} [${remote}${(j:/:)gitstatus}]"
     fi
 }
 
