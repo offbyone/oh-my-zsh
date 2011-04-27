@@ -2,7 +2,6 @@
 
 unsetopt noautomenu
 setopt complete_in_word
-setopt complete_aliases
 setopt always_to_end
 
 WORDCHARS=''
