@@ -10,18 +10,23 @@ function collapse_pwd {
 }
 
 function vcs_type() {
-    hg_root=$(hg root 2>/dev/null)
-    git_root=$(git rev-parse --show-toplevel 2>/dev/null)
+    typeset -A vcs_paths
+    vcs_paths[hg]=$(hg root 2>/dev/null)
+    vcs_paths[git]=$(git rev-parse --show-toplevel 2>/dev/null)
+    vcs_paths[p4]=$(p4 info 2>/dev/null | awk '/Client root: / {print $3}' 2>/dev/null)
 
-    [[ ${#hg_root} == 0 && ${#git_root} == 0 ]] && echo 'none' && return
-    [[ ${#hg_root} == 0 ]] && echo 'git' && return
-    [[ ${#git_root} == 0 ]] && echo 'hg' && return
+    local answer=none
+    local max=0
 
-    if [[ ${#hg_root} -gt ${#git_root} ]]; then
-        echo 'hg'
-    else
-        echo 'git'
-    fi
+    for key in ${(k)vcs_paths}; do
+        cur=${#vcs_paths[$key]};
+        if (( cur > max )); then
+            max=$cur;
+            answer=$key;
+        fi;
+    done
+
+    echo $answer
 }
 
 function get_env_name {
@@ -31,6 +36,7 @@ function get_env_name {
 function prompt_char {
     git_prompt_char='±'
     hg_prompt_char='☿'
+    p4_prompt_char='☉'
     default_prompt_char='○'
 
     case $(vcs_type) in
@@ -39,6 +45,9 @@ function prompt_char {
             ;;
         hg)
             echo $hg_prompt_char
+            ;;
+        p4)
+            echo $p4_prompt_char
             ;;
         *)
             echo $default_prompt_char
@@ -107,7 +116,7 @@ function get_prompt_user_color() {
     echo $color
 }
 
-zstyle ':vcs_info:*' enable hg git bzr svn
+zstyle ':vcs_info:*' enable hg git bzr svn p4
 
 zstyle ':vcs_info:(hg*|git*):*' get-revision true
 zstyle ':vcs_info:(hg*|git*):*' check-for-changes true
@@ -171,7 +180,9 @@ function +vi-git-stash() {
 
 
 if [[ $EMACS != t ]]; then
-    RPROMPT='$(battery_charge)'
+    if which ioreg >/dev/null 2>&1; then
+        RPROMPT='$(battery_charge)'
+    fi
 fi
 
 precmd () { vcs_info }
