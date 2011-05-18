@@ -11,8 +11,13 @@ for config_file ( $ZSH/lib/*.zsh(.N) ) source $config_file
 # Load all of the custom paths; these are needed for later
 for config_file ( $ZSH/paths/*.zsh(.N) ) source $config_file
 
-# Load all of your custom configurations from custom/
-for config_file ( $ZSH/custom/*.zsh(.N) ) source $config_file
+# Add all defined plugins to fpath
+plugin=${plugin:=()}
+for plugin ($plugins) fpath=($ZSH/plugins/$plugin $fpath)
+
+# Load and run compinit
+autoload -U compinit
+compinit -i
 
 # Load all of the plugins that were defined in ~/.zshrc
 plugin=${plugin:=()}
@@ -24,8 +29,23 @@ for plugin ($plugins); do
     fi
 done
 
+# Load all of your custom configurations from custom/
+for config_file ($ZSH/custom/*.zsh) source $config_file
+
 # Load the theme
-source "$ZSH/themes/$ZSH_THEME.zsh-theme"
+# Check for updates on initial load...
+if [ "$ZSH_THEME" = "random" ]
+then
+  themes=($ZSH/themes/*zsh-theme)
+  N=${#themes[@]}
+  ((N=RANDOM%N))
+  RANDOM_THEME=${themes[$N]}
+  source "$RANDOM_THEME"
+  echo "[oh-my-zsh] Random theme '$RANDOM_THEME' loaded..."
+else
+  source "$ZSH/themes/$ZSH_THEME.zsh-theme"
+fi
+
 
 # Check for updates on initial load...
 if [ "$DISABLE_AUTO_UPDATE" = "true" ]
