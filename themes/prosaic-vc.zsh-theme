@@ -187,5 +187,5 @@ fi
 
 precmd () { vcs_info }
 PROMPT='
-%{$(get_prompt_user_color)%}%n%{$reset_color%} at %{$(get_prompt_host_color)%}%m%{$reset_color%} in %{$fg_bold[green]%}$(collapse_pwd)%{$reset_color%} ${vcs_info_msg_0_}
+%{$(get_prompt_user_color)%}%n%{$reset_color%} at %{$(get_prompt_host_color)%}%m%{$reset_color%} in %{$fg_bold[green]%}%~%{$reset_color%} ${vcs_info_msg_0_}
 $(virtualenv_info)$(prompt_char) '
