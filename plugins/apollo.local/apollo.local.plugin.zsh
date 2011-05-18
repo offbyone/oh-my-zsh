@@ -28,7 +28,8 @@ funcname use_apollo () {
     export P4CONFIG=.p4config
 
     #Make SDETools use a simplified directory structure for organizing source code.
-    export BRAZIL_WORKSPACE_DEFAULT_LAYOUT=short
+    # NOTE -- I don't want this.
+    # export BRAZIL_WORKSPACE_DEFAULT_LAYOUT=short
 
     # GIIIIIIIT
     export BRAZIL_WORKSPACE_GITMODE=1
