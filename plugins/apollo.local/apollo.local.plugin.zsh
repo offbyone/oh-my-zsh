@@ -65,6 +65,10 @@ funcname use_apollo () {
     fi
 
     # End of lines added by compinstall
+
+    # Some useful Apollo/Brazil aliases
+    alias br=brazil
+    alias bb=brazil-build
 }
 
 [[ -d $APOLLO_ENV ]] && use_apollo
