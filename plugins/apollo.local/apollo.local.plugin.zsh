@@ -69,6 +69,9 @@ funcname use_apollo () {
     # Some useful Apollo/Brazil aliases
     alias br=brazil
     alias bb=brazil-build
+
 }
 
 [[ -d $APOLLO_ENV ]] && use_apollo
+# speed up completions
+zstyle ':completion:*' users chrisros offline offby1 crose
