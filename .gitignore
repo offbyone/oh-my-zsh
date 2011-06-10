@@ -9,3 +9,4 @@ aliases/*.local.zsh
 plugins/*.local
 
 .DS_Store
+cache
