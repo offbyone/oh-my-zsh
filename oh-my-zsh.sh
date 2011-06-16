@@ -27,13 +27,13 @@ compinit -i
 # Load all of the plugins that were defined in ~/.zshrc
 plugin=${plugin:=()}
 for plugin ($plugins); do
-  if [ -f $ZSH/custom/plugins/$plugin/$plugin.plugin.zsh ]; then
-    source $ZSH/custom/plugins/$plugin/$plugin.plugin.zsh
-  elif [ -f $ZSH/plugins/$plugin/$plugin.plugin.zsh ]; then
-    source $ZSH/plugins/$plugin/$plugin.plugin.zsh
-  elif [[ $WARN_ON_MISSING_PLUGINS != "false" ]]; then
-    echo "WARNING: Missing plugin $plugin"
-  fi
+    if [ -f $ZSH/custom/plugins/$plugin/$plugin.plugin.zsh ]; then
+        source $ZSH/custom/plugins/$plugin/$plugin.plugin.zsh
+    elif [ -f $ZSH/plugins/$plugin/$plugin.plugin.zsh ]; then
+        source $ZSH/plugins/$plugin/$plugin.plugin.zsh
+    elif [[ $WARN_ON_MISSING_PLUGINS != "false" ]]; then
+        echo "WARNING: Missing plugin $plugin"
+    fi
 done
 
 # Load all of your custom configurations from custom/
