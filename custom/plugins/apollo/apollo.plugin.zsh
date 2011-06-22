@@ -19,17 +19,18 @@ func_name env_append () {
 
 funcname use_apollo () {
 
-    env_append SDETools
     env_prepend eclipse-3.6
     env_append envImprovement
-    env_append Git
+    env_prepend Git
+    env_prepend SDETools
+    prepend_path PATH /apollo/env/SDETools/subversion-1.6/bin
+    prepend_path PATH /usr/local/bin # I really prefer my own tools
 
     #Configuration needed by perforce to function correctly in any directory
     export P4CONFIG=.p4config
 
     #Make SDETools use a simplified directory structure for organizing source code.
-    # NOTE -- I don't want this.
-    # export BRAZIL_WORKSPACE_DEFAULT_LAYOUT=short
+    export BRAZIL_WORKSPACE_DEFAULT_LAYOUT=short
 
     # GIIIIIIIT
     export BRAZIL_WORKSPACE_GITMODE=1
