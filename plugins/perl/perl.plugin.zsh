@@ -27,7 +27,7 @@ alias latest-perl='curl -s http://www.perl.org/get.html | perl -wlne '\''if (/pe
 
 # Functions #################################################################
 
-# newpl - creates a basic Perl script file and opens it with $EDITOR 
+# newpl - creates a basic Perl script file and opens it with $EDITOR
 newpl () {
 	# set $EDITOR to 'vim' if it is undefined
 	[[ -z $EDITOR ]] && EDITOR=vim
@@ -60,3 +60,6 @@ say() {
     print "$1\n"
 }
 
+# if [ -f $HOME/perl5/lib/perl5/local/lib.pm ]; then
+#     eval $(perl -I$HOME/perl5/lib/perl5 -Mlocal::lib)
+# fi
