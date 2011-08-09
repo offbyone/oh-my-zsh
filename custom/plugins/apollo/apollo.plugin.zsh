@@ -24,7 +24,11 @@ funcname use_apollo () {
     env_prepend Git
     env_prepend SDETools
     prepend_path PATH /apollo/env/SDETools/subversion-1.6/bin
+    prepend_path PATH /usr/local/ghc-7.0.4/bin
     prepend_path PATH /usr/local/bin # I really prefer my own tools
+    prepend_path PATH $HOME/local/bin
+    prepend_path PATH $HOME/bin
+
 
     #Configuration needed by perforce to function correctly in any directory
     export P4CONFIG=.p4config
@@ -70,6 +74,10 @@ funcname use_apollo () {
     # Some useful Apollo/Brazil aliases
     alias br=brazil
     alias bb=brazil-build
+
+    # Techops decryptor
+    alias techops_decrypt='/apollo/bin/env -e SwitchBuilder perl -MTechOpsSysEng::Crypt -le "print TechOpsSysEng::Crypt->new->decrypt(shift)"'
+    alias techops_encrypt='/apollo/bin/env -e SwitchBuilder perl -MTechOpsSysEng::Crypt -le "print TechOpsSysEng::Crypt->new->encrypt(shift)"'
 
 }
 
