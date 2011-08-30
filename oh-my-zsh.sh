@@ -14,7 +14,9 @@ fpath=($ZSH/functions $ZSH/completions $fpath)
 for config_file ( $ZSH/lib/*.zsh(.N) ) source $config_file
 
 # Load all of the custom paths; these are needed for later
-for config_file ( $ZSH/paths/*.zsh(.N) ) source $config_file
+for config_file ( .(e:'reply=( $ZSH/paths/*.zsh(.N) $ZSH/custom/paths/*.zsh(.N) )':oe,'REPLY=$REPLY:t',) ); do
+    source $config_file
+done
 
 # Add all defined plugins to fpath
 plugin=${plugin:=()}
