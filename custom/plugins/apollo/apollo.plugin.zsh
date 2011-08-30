@@ -70,7 +70,11 @@ funcname use_apollo () {
     # Some useful Apollo/Brazil aliases
     alias br=brazil
     alias bb=brazil-build
+    alias brun=brazil-runtime-exec
 
+    # Some techops aliases
+    alias techops_encrypt='/apollo/bin/env -e SwitchBuilder perl -MTechOpsSysEng::Crypt -le "print TechOpsSysEng::Crypt->new->encrypt(shift)"'
+    alias techops_decrypt='/apollo/bin/env -e SwitchBuilder perl -MTechOpsSysEng::Crypt -le "print TechOpsSysEng::Crypt->new->decrypt(shift)"'
 }
 
 [[ -d $APOLLO_ENV ]] && use_apollo
