@@ -9,11 +9,43 @@ function collapse_pwd {
     echo $(pwd | sed -e "s,^$HOME,~,")
 }
 
+function hg_root() {
+    hg root 2>/dev/null
+}
+
+function git_root() {
+    git rev-parse --show-toplevel 2>/dev/null
+}
+
+function p4_root() {
+    p4 info 2>/dev/null | awk '/Client root: / {print $3}' 2>/dev/null
+}
+
+function svn_root() {
+    svn info >/dev/null 2>&1 && echo $(pwd)
+}
+
+VCS_TYPES=${VCS_TYPES:-(hg git p4 svn)}
+
+function vcs_types() {
+    if [[ -f $HOME/.zsh-vcs-types ]]; then
+        for t in `cat $HOME/.zsh-vcs-types`; do
+            echo $t
+        done
+    else
+        echo hg git p4 svn
+    fi
+}
+
 function vcs_type() {
     typeset -A vcs_paths
-    vcs_paths[hg]=$(hg root 2>/dev/null)
-    vcs_paths[git]=$(git rev-parse --show-toplevel 2>/dev/null)
-    vcs_paths[p4]=$(p4 info 2>/dev/null | awk '/Client root: / {print $3}' 2>/dev/null)
+    for vcs_type in `vcs_types`; do
+        cmd=${vcs_type}_root
+        vcs_paths[$vcs_type]=$($cmd)
+    done
+    # vcs_paths[hg]=$(hg root 2>/dev/null)
+    # vcs_paths[git]=$(git rev-parse --show-toplevel 2>/dev/null)
+    # vcs_paths[p4]=$(p4 info 2>/dev/null | awk '/Client root: / {print $3}' 2>/dev/null)
 
     local answer=none
     local max=0
@@ -37,6 +69,7 @@ function prompt_char {
     git_prompt_char='±'
     hg_prompt_char='☿'
     p4_prompt_char='☉'
+    svn_prompt_char='ƾ'
     default_prompt_char='○'
 
     case $(vcs_type) in
@@ -48,6 +81,9 @@ function prompt_char {
             ;;
         p4)
             echo $p4_prompt_char
+            ;;
+        svn)
+            echo $svn_prompt_char
             ;;
         *)
             echo $default_prompt_char
