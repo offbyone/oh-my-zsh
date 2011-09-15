@@ -1,5 +1,3 @@
-export APOLLO_ENV=/apollo/env
-
 funcname _apollo_path_mod () {
     $1 PATH $APOLLO_ENV/$2/bin
     $1 LD_LIBRARY_PATH $APOLLO_ENV/$2/lib
@@ -18,7 +16,15 @@ func_name env_append () {
 }
 
 funcname use_apollo () {
+    ENV_IMPROVEMENT_ROOT=${ENV_IMPROVEMENT_ROOT:-/apollo/env/envImprovement}
+    module_path=($ENV_IMPROVEMENT_ROOT/var/lib/zsh/$ZSH_VERSION/)
 
+    # search path for zsh functions  (fpath ==> function path)
+    # Make sure the AmazonZshFunctions list comes second for overriding reasons
+    fpath=(                                                             \
+        $ENV_IMPROVEMENT_ROOT/var/zsh/functions/$ZSH_VERSION            \
+        $ENV_IMPROVEMENT_ROOT/var/share/zsh/$ZSH_VERSION/functions      \
+	)
     env_prepend eclipse-3.6
     env_append envImprovement
     env_prepend Git
