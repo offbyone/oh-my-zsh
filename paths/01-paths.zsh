@@ -1,4 +1,5 @@
 append_path PATH /Developer/Tools
+append_path PATH /Developer/usr/bin
 append_path PATH /Applications
 append_path PATH /usr/local/mysql/bin
 append_path PATH /Library/PostgreSQL8/bin
