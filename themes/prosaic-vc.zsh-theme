@@ -91,10 +91,6 @@ function prompt_char {
     esac
 }
 
-function battery_charge {
-    echo `$BAT_CHARGE` 2>/dev/null
-}
-
 function virtualenv_info {
     [ $VIRTUAL_ENV ] && echo '('`basename $VIRTUAL_ENV`') '
 }
@@ -214,12 +210,6 @@ function +vi-git-stash() {
     fi
 }
 
-
-if [[ $EMACS != t ]]; then
-    if which ioreg >/dev/null 2>&1; then
-        RPROMPT='$(battery_charge)'
-    fi
-fi
 
 precmd () { vcs_info }
 PROMPT='
