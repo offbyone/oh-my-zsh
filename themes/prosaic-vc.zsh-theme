@@ -210,8 +210,12 @@ function +vi-git-stash() {
     fi
 }
 
+function vcs_info_local_only() {
+    unset vcs_info_msg_0_
+    is_local_fs && vcs_info
+}
 
-precmd () { vcs_info }
+precmd () { vcs_info_local_only }
 PROMPT='
 %{$(get_prompt_user_color)%}%n%{$reset_color%} at %{$(get_prompt_host_color)%}%m%{$reset_color%} in %{$fg_bold[green]%}%~%{$reset_color%} ${vcs_info_msg_0_}
 $(virtualenv_info)$(prompt_char) '
