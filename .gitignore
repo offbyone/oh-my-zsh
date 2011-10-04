@@ -11,3 +11,4 @@ plugins/*.local
 
 .DS_Store
 cache
+*.swp
