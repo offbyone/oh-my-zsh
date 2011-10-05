@@ -18,6 +18,12 @@ function get_env_name () {
         return
     fi
 
+    if [ -f $HOME/.zsh-env-name ]; then
+        forced_env=$(cat $HOME/.zsh-env-name)
+        echo $forced_env
+        return
+    fi
+
     hostname=${1:-`hostname`}
     case $hostname in
         void* | null*)
