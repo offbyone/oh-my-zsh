@@ -67,10 +67,6 @@ function vcs_type() {
     echo $answer
 }
 
-function get_env_name {
-    echo home.personal
-}
-
 typeset -A prompt_char_map
 prompt_char_map[git]='±'
 prompt_char_map[hg]='☿'

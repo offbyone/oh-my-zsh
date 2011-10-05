@@ -1,18 +1,18 @@
+unset ENVIRONMENT_NAME_CACHE
+
 function set_environment() {
     env_name=${1:-other}
-    CR_ENVIRONMENT_SELECTION=$env_name
-    export CR_ENVIRONMENT_SELECTION
-    reload
+    ENVIRONMENT_NAME_CACHE=$env_name
+    export ENVIRONMENT_NAME_CACHE
 }
 
 function set_default_environment() {
-    unset CR_ENVIRONMENT_SELECTION
-    export CR_ENVIRONMENT_SELECTION
-    reload
+    unset ENVIRONMENT_NAME_CACHE
+    export ENVIRONMENT_NAME_CACHE
 }
 
 function get_env_name () {
-    local forced_env=${CR_ENVIRONMENT_SELECTION:-xxx}
+    local forced_env=${ENVIRONMENT_NAME_CACHE:-xxx}
     if [ "$forced_env" != "xxx" ]; then
         echo $forced_env
         return
@@ -47,3 +47,5 @@ function get_env_name () {
     esac
     echo $loc
 }
+
+set_environment `get_env_name`
