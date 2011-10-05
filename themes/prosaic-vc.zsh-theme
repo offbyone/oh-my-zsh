@@ -25,6 +25,12 @@ function svn_root() {
     svn info >/dev/null 2>&1 && echo $(pwd)
 }
 
+function bzr_root {
+    root=$(bzr info 2>/dev/null | grep 'branch root:' | sed -e 's/^.*branch root: //')
+    root=$(unset CDPATH; cd $root; pwd)
+    echo $root
+}
+
 VCS_TYPES=${VCS_TYPES:-(hg git p4 svn)}
 
 function vcs_types() {
@@ -65,28 +71,22 @@ function get_env_name {
     echo home.personal
 }
 
-function prompt_char {
-    git_prompt_char='±'
-    hg_prompt_char='☿'
-    p4_prompt_char='☉'
-    svn_prompt_char='ƾ'
-    default_prompt_char='○'
+typeset -A prompt_char_map
+prompt_char_map[git]='±'
+prompt_char_map[hg]='☿'
+prompt_char_map[p4]='☉'
+prompt_char_map[svn]='ƾ'
+prompt_char_map[bzr]='⛙'
+prompt_char_map[default]='○'
 
-    case $(vcs_type) in
-        git)
-            echo $git_prompt_char
-            ;;
-        hg)
-            echo $hg_prompt_char
-            ;;
-        p4)
-            echo $p4_prompt_char
-            ;;
-        svn)
-            echo $svn_prompt_char
+function prompt_char {
+    local _vcs=$(vcs_type)
+    case $_vcs in
+        git|hg|p4|svn|bzr)
+            echo $prompt_char_map[$_vcs]
             ;;
         *)
-            echo $default_prompt_char
+            echo $prompt_char_map[default]
             ;;
     esac
 }
@@ -148,18 +148,18 @@ function get_prompt_user_color() {
     echo $color
 }
 
-zstyle ':vcs_info:*' enable hg git bzr svn p4
+zstyle ':vcs_info:*' enable `vcs_types`
 
-zstyle ':vcs_info:(hg*|git*):*' get-revision true
-zstyle ':vcs_info:(hg*|git*):*' check-for-changes true
+zstyle ':vcs_info:(hg*|git*|bzr*):*' get-revision true
+zstyle ':vcs_info:(hg*|git*|bzr*):*' check-for-changes true
 
 # rev+changes branch misc
 zstyle ':vcs_info:hg*' formats "[%i%u %b%m]"
 zstyle ':vcs_info:hg*' actionformats "(%{$fg_bold[red]%}%a%{$reset_color%})[%i%u %b%m]"
 
 # hash changes branch misc
-zstyle ':vcs_info:git*' formats "[%{$fg[yellow]%}%12.12i%{$reset_color%} %u %{$fg[magenta]%}%b%{$reset_color%}%m]"
-zstyle ':vcs_info:git*' actionformats "(%a)[%{$fg[yellow]%}%12.12i%{$reset_color%} %u %{$fg[magenta]%}%b%{$reset_color%}%m]"
+zstyle ':vcs_info:(git*|bzr*)' formats "[%{$fg[yellow]%}%12.12i%{$reset_color%} %u %{$fg[magenta]%}%b%{$reset_color%}%m]"
+zstyle ':vcs_info:(git*|bzr*)' actionformats "(%a)[%{$fg[yellow]%}%12.12i%{$reset_color%} %u %{$fg[magenta]%}%b%{$reset_color%}%m]"
 
 zstyle ':vcs_info:git*+set-message:*' hooks git-st git-stash
 
