@@ -98,7 +98,7 @@ function get_prompt_host_color() {
             color=$fg[green]
             ;;
         work.personal)
-            color=$fg[blue]
+            color=$fg[cyan]
             ;;
         work.test)
             color=$fg[green]
