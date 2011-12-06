@@ -31,16 +31,26 @@ function bzr_root {
     echo $root
 }
 
-VCS_TYPES=${VCS_TYPES:-(hg git p4 svn)}
+_VCS_TYPES=NONE
 
 function vcs_types() {
+    local vcs_type_list=""
+
+    if [ "$_VCS_TYPES" != NONE ]; then
+        echo "$_VCS_TYPES"
+        return
+    fi
+
     if [[ -f $HOME/.zsh-vcs-types ]]; then
         for t in `cat $HOME/.zsh-vcs-types`; do
-            echo $t
+            vcs_type_list="$vcs_type_list $t"
         done
+        _VCS_TYPES="$vcs_type_list"
     else
-        echo hg git p4 svn
+        _VCS_TYPES="hg git svn bzr p4"
     fi
+
+    echo "$_VCS_TYPES"
 }
 
 function vcs_type() {
@@ -78,7 +88,7 @@ prompt_char_map[default]='○'
 function prompt_char {
     local _vcs=$(vcs_type)
     case $_vcs in
-        git|hg|p4|svn|bzr)
+        git|hg|svn|bzr|p4)
             echo $prompt_char_map[$_vcs]
             ;;
         *)
@@ -208,7 +218,11 @@ function +vi-git-stash() {
 
 function vcs_info_local_only() {
     unset vcs_info_msg_0_
-    is_local_fs && vcs_info
+    if is_local_fs; then
+        vcs_info
+    elif [ "$ZSH_FORCE_VCS_PROMPT" = 1 ]; then
+        vcs_info
+    fi
 }
 
 precmd () { vcs_info_local_only }
