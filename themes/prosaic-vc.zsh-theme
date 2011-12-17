@@ -55,19 +55,22 @@ function vcs_types() {
 
 function vcs_type() {
     typeset -A vcs_paths
-    for vcs_type in `vcs_types`; do
+    local _vcs_types="$(vcs_types)"
+    _vcs_types=(${(s/ /)_vcs_types})
+    for vcs_type in $_vcs_types; do
         cmd=${vcs_type}_root
         vcs_paths[$vcs_type]=$($cmd)
     done
-    # vcs_paths[hg]=$(hg root 2>/dev/null)
-    # vcs_paths[git]=$(git rev-parse --show-toplevel 2>/dev/null)
-    # vcs_paths[p4]=$(p4 info 2>/dev/null | awk '/Client root: / {print $3}' 2>/dev/null)
 
     local answer=none
     local max=0
 
-    for key in ${(k)vcs_paths}; do
+    for key in $_vcs_types; do
         cur=${#vcs_paths[$key]};
+        if (( cur == 0 )); then
+            continue
+        fi
+
         if (( cur > max )); then
             max=$cur;
             answer=$key;
