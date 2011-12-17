@@ -1,11 +1,26 @@
-append_path PATH /Developer/Tools
-append_path PATH /Developer/usr/bin
-append_path PATH /Applications
-append_path PATH /usr/local/mysql/bin
-append_path PATH /Library/PostgreSQL8/bin
-prepend_path PATH /usr/local/sbin
-prepend_path PATH /usr/local/bin
-prepend_path PATH /usr/local/share/python
+APPEND_PATHS=(
+    /Developer/Tools
+    /Developer/usr/bin
+    /Applications
+    /usr/local/mysql/bin
+    /Library/PostgreSQL8/bin
+)
+
+PREPEND_PATHS=(
+    /usr/local/sbin
+    /usr/local/bin
+    /usr/local/Cellar/ruby/1.9.2-p290/bin
+    /usr/local/share/python
+)
+
+for d in $APPEND_PATHS; do
+    [ -d $d ] && append_path PATH $d
+done
+
+for d in $PREPEND_PATHS; do
+    [ -d $d ] && prepend_path PATH $d
+done
+
 
 # : use my binaries first
 prepend_path PATH $HOME/local/bin
