@@ -1,3 +1,5 @@
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
+
 alias rubies='rvm list rubies'
 alias gemsets='rvm gemset list'
 

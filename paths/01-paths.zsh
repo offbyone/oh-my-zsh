@@ -34,7 +34,8 @@ prepend_path MANPATH /usr/local/man
 prepend_path MANPATH $HOME/local/man
 
 # Add the local lib directory to the LD_LIBRARY_PATH
-prepend_path LD_LIBRARY_PATH /usr/local/lib
-prepend_path LD_LIBRARY_PATH $HOME/local/lib
-prepend_path LD_LIBRARY_PATH $HOME/lib
-export PATH MANPATH LD_LIBRARY_PATH
+# prepend_path LD_LIBRARY_PATH /usr/local/lib
+# prepend_path LD_LIBRARY_PATH $HOME/local/lib
+# prepend_path LD_LIBRARY_PATH $HOME/lib
+export PATH MANPATH
+# export LD_LIBRARY_PATH
