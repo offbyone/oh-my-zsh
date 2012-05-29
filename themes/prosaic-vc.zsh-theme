@@ -27,8 +27,10 @@ function svn_root() {
 
 function bzr_root {
     root=$(bzr info 2>/dev/null | grep 'branch root:' | sed -e 's/^.*branch root: //')
-    root=$(unset CDPATH; cd $root; pwd)
-    echo $root
+    if [[ ${root}xxx != xxx ]]; then
+        root=$(unset CDPATH; cd $root; pwd)
+        echo $root
+    fi
 }
 
 _VCS_TYPES=NONE
@@ -85,8 +87,8 @@ prompt_char_map[git]='±'
 prompt_char_map[hg]='☿'
 prompt_char_map[p4]='☉'
 prompt_char_map[svn]='ƾ'
-prompt_char_map[bzr]='⛙'
-prompt_char_map[default]='○'
+prompt_char_map[bzr]='β'
+prompt_char_map[default]='$'
 
 function prompt_char {
     local _vcs=$(vcs_type)
