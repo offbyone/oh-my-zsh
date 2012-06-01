@@ -165,6 +165,8 @@ zstyle ':vcs_info:(hg*|git*|bzr*):*' get-revision true
 zstyle ':vcs_info:(hg*|git*|bzr*):*' check-for-changes true
 
 # rev+changes branch misc
+zstyle ':vcs_info:(git*|hg*)' stagedstr "○"
+zstyle ':vcs_info:(git*|hg*)' unstagedstr "⚡"
 zstyle ':vcs_info:hg*' formats "[%i%u %b%m]"
 zstyle ':vcs_info:hg*' actionformats "(%{$fg_bold[red]%}%a%{$reset_color%})[%i%u %b%m]"
 
