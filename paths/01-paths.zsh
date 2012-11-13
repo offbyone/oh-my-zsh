@@ -33,9 +33,13 @@ prepend_path MANPATH /usr/local/share/man
 prepend_path MANPATH /usr/local/man
 prepend_path MANPATH $HOME/local/man
 
+# add $HOME/local to PKG_CONFIG_PATH
+prepend_path PKG_CONFIG_PATH $HOME/local/lib/pkgconfig
+
 # Add the local lib directory to the LD_LIBRARY_PATH
 # prepend_path LD_LIBRARY_PATH /usr/local/lib
 # prepend_path LD_LIBRARY_PATH $HOME/local/lib
 # prepend_path LD_LIBRARY_PATH $HOME/lib
 export PATH MANPATH
+export PKG_CONFIG_PATH
 # export LD_LIBRARY_PATH
