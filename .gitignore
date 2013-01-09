@@ -12,3 +12,5 @@ plugins/*.local
 .DS_Store
 cache
 *.swp
+!custom/example.zshcache
+cache/
