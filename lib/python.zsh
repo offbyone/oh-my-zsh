@@ -1,3 +1,5 @@
+export VIRTUAL_ENV_DISABLE_PROMPT=yes
+
 function wo() {
     [ "$VEW_SOURCED" ] || source "$VEW_PATH"
     [ -f './.venv' ] && workon `cat ./.venv` || workon $1
