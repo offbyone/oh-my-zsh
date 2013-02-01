@@ -1,12 +1,10 @@
+export ALTERNATE_EDITOR="$HOME/scripts/emacs-daemon"
+export EDITOR="$HOME/scripts/editor"
+export VISUAL="$HOME/scripts/editor"
+export GIT_EDITOR="$EDITOR"
+alias emacs=$HOME/scripts/editor
 if [[ $EMACS = t ]]; then
-    export EDITOR=emacsclient
-    export VISUAL=emacsclient
     export PAGER=cat
-    alias emacs='emacsclient'
-    alias E="SUDO_EDITOR=\"emacsclient -c -a emacs\" sudoedit"
 else
-    export EDITOR=${EDITOR:-emacs}
-    export VISUAL=${VISUAL:-emacs}
     export PAGER=${PAGER:-less}
-    alias E=sudoedit
 fi
