@@ -1,0 +1,3 @@
+alias start_agent="AUTOSSH_DEBUG=1 autossh -M 0 chrisros.desktop.amazon.com -x 'ln -f -s $SSH_AUTH_SOCK $HOME/.ssh_auth_sock; cat '"
+
+# note that this does not work; you have to run it outside of the alias. Fucking escaping...
