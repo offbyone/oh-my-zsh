@@ -11,10 +11,12 @@ fpath=($ZSH/functions $ZSH/completions $fpath)
 
 # Load all of the config files in ~/oh-my-zsh that end in .zsh
 # TIP: Add files you don't want in git to .gitignore
-for config_file ( $ZSH/lib/*.zsh(.N) ) source $config_file
+for config_file ($ZSH/lib/*.zsh); do
+  source $config_file
+done
 
 # Load all of the custom paths; these are needed for later
-for config_file ( .(e:'reply=( $ZSH/paths/*.zsh(.N) $ZSH/custom/paths/*.zsh(.N) )':oe,'REPLY=$REPLY:t',) ); do
+for config_file ( .(e:'reply=( $ZSH/paths/*.zsh(N) $ZSH/custom/paths/*.zsh(N) )':oe,'REPLY=$REPLY:t',) ); do
     source $config_file
 done
 
