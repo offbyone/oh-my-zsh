@@ -9,8 +9,6 @@ APPEND_PATHS=(
 PREPEND_PATHS=(
     /usr/local/sbin
     /usr/local/bin
-    /usr/local/Cellar/ruby/1.9.2-p290/bin
-    /usr/local/share/python
 )
 
 for d in $APPEND_PATHS; do
