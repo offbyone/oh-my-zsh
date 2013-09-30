@@ -6,3 +6,5 @@ custom/example.zsh
 *.swp
 !custom/example.zshcache
 cache/
+/custom/pure
+functions/prompt_pure_setup
