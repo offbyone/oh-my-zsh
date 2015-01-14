@@ -124,14 +124,14 @@ enable_autoenv() {
 }
 
 # probe to see if we have access to a shasum command, otherwise disable autoenv
-if which shasum 2>/dev/null >&2 ; then
+if which gshasum 2>/dev/null >&2 ; then
     autoenv_shasum() {
-        shasum "$@"
+        gshasum "$@"
     }
     enable_autoenv
-elif which gsha1sum 2>/dev/null >&2; then
+elif which sha1sum 2>/dev/null >&2; then
     autoenv_shasum() {
-        gsha1sum "$@"
+        sha1sum "$@"
     }
     enable_autoenv
 else
