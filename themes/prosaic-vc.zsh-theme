@@ -82,7 +82,7 @@ function vcs_type() {
     echo $answer
 }
 
-typeset -A prompt_char_map
+typeset -A -g prompt_char_map
 prompt_char_map[git]='±'
 prompt_char_map[hg]='☿'
 prompt_char_map[p4]='☉'
