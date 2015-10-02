@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 AUTOENV_AUTH_FILE=~/.autoenv_authorized
+if [ -z "$AUTOENV_ENV_FILENAME" ]; then
+    AUTOENV_ENV_FILENAME=.env
+fi
 
 if [[ -n "${ZSH_VERSION}" ]]
 then __array_offset=0
@@ -16,7 +19,7 @@ autoenv_init()
   _files=( $(
     while [[ "$PWD" != "/" && "$PWD" != "$home" ]]
     do
-      _file="$PWD/.env"
+      _file="$PWD/$AUTOENV_ENV_FILENAME"
       if [[ -e "${_file}" ]]
       then echo "${_file}"
       fi
@@ -31,6 +34,12 @@ autoenv_init()
     autoenv_check_authz_and_run "$envfile"
     : $(( _file -= 1 ))
   done
+}
+
+autoenv_run() {
+  typeset _file
+  _file="$(realpath "$1")"
+  autoenv_check_authz_and_run "${_file}"
 }
 
 autoenv_env() {
@@ -68,7 +77,7 @@ autoenv_check_authz_and_run()
   typeset envfile
   envfile=$1
   if autoenv_check_authz "$envfile"; then
-    source "$envfile"
+    autoenv_source "$envfile"
     return 0
   fi
   if [[ -z $MC_SID ]]; then #make sure mc is not running
@@ -85,7 +94,7 @@ autoenv_check_authz_and_run()
     read answer
     if [[ "$answer" == "y" ]]; then
       autoenv_authorize_env "$envfile"
-      source "$envfile"
+      autoenv_source "$envfile"
     fi
   fi
 }
@@ -93,8 +102,8 @@ autoenv_check_authz_and_run()
 autoenv_deauthorize_env() {
   typeset envfile
   envfile=$1
-  cp "$AUTOENV_AUTH_FILE" "$AUTOENV_AUTH_FILE.tmp"
-  grep -Gv "$envfile:" "$AUTOENV_AUTH_FILE.tmp" > $AUTOENV_AUTH_FILE
+  \cp "$AUTOENV_AUTH_FILE" "$AUTOENV_AUTH_FILE.tmp"
+  \grep -Gv "$envfile:" "$AUTOENV_AUTH_FILE.tmp" > $AUTOENV_AUTH_FILE
 }
 
 autoenv_authorize_env() {
@@ -102,6 +111,14 @@ autoenv_authorize_env() {
   envfile=$1
   autoenv_deauthorize_env "$envfile"
   autoenv_hashline "$envfile" >> $AUTOENV_AUTH_FILE
+}
+
+autoenv_source() {
+  typeset allexport
+  allexport=$(set +o | grep allexport)
+  set -a
+  source "$1"
+  eval "$allexport"
 }
 
 autoenv_cd()
