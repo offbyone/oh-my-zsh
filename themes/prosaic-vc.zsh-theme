@@ -103,7 +103,11 @@ function prompt_char {
 }
 
 function virtualenv_info {
-    [ $VIRTUAL_ENV ] && echo '('`basename $VIRTUAL_ENV`') '
+    if [ $VIRTUAL_ENV_NAME ]; then
+        echo -n "(${VIRTUAL_ENV_NAME}) "
+    elif [ $VIRTUAL_ENV ]; then
+        echo -n '('`basename $VIRTUAL_ENV`') '
+    fi
 }
 
 function get_prompt_host_color() {
