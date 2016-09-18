@@ -1,4 +1,4 @@
-if [[ $EMACS == t ]]; then
+if [[ ! -z $INSIDE_EMACS ]]; then
     term=ansi
 else
     term=$TERM

@@ -1,6 +1,6 @@
 export ALTERNATE_EDITOR="$HOME/scripts/emacs-daemon"
 export GIT_EDITOR="$EDITOR"
-if [[ $EMACS = t ]]; then
+if [[ ! -z $INSIDE_EMACS ]]; then
     export PAGER=cat
     export EDITOR=emacsclient
 else

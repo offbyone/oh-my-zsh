@@ -118,7 +118,7 @@ PROMPT='
 %{$(get_prompt_user_color)%}%n%{$reset_color%} at %{$(get_prompt_host_color)%}%m%{$reset_color%} in %{$fg_bold[green]%}$(collapse_pwd)%{$reset_color%}$(hg_prompt_info)$(git_prompt_if_applicable)
 $(virtualenv_info)$(prompt_char) '
 
-if [[ $EMACS != t ]]; then
+if [[ -z $INSIDE_EMACS ]]; then
     RPROMPT='$(battery_charge)'
 fi
 

@@ -1,1 +1,1 @@
-[[ $EMACS = t ]] && unsetopt zle
+[[ ! -z $INSIDE_EMACS ]] && unsetopt zle
